@@ -109,14 +109,48 @@
         "realmRoles": ["prothetic_user"]
       }
     ],
+    "accessTokenLifespan": 300,
+    "ssoSessionIdleTimeout": 1800,
+    "ssoSessionMaxLifespan": 36000,
+    "revokeRefreshToken": true,
+    "refreshTokenMaxReuse": 0,
     "clients": [
       {
         "clientId": "reports-frontend",
+        "name": "BionicPRO reports SPA (public client, Authorization Code + PKCE)",
         "enabled": true,
         "publicClient": true,
+        "protocol": "openid-connect",
+        "rootUrl": "http://localhost:3000",
+        "baseUrl": "/",
         "redirectUris": ["http://localhost:3000/*"],
         "webOrigins": ["http://localhost:3000"],
-        "directAccessGrantsEnabled": true
+        "standardFlowEnabled": true,
+        "implicitFlowEnabled": false,
+        "directAccessGrantsEnabled": false,
+        "serviceAccountsEnabled": false,
+        "fullScopeAllowed": true,
+        "attributes": {
+          "pkce.code.challenge.method": "S256",
+          "post.logout.redirect.uris": "http://localhost:3000/*",
+          "oauth2.device.authorization.grant.enabled": "false",
+          "oidc.ciba.grant.enabled": "false"
+        },
+        "defaultClientScopes": ["web-origins", "profile", "roles", "email"],
+        "optionalClientScopes": ["offline_access"],
+        "protocolMappers": [
+          {
+            "name": "reports-api audience",
+            "protocol": "openid-connect",
+            "protocolMapper": "oidc-audience-mapper",
+            "consentRequired": false,
+            "config": {
+              "included.client.audience": "reports-api",
+              "id.token.claim": "false",
+              "access.token.claim": "true"
+            }
+          }
+        ]
       },
       {
         "clientId": "reports-api",
