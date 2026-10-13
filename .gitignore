@@ -1,2 +1,7 @@
 /postgres-keycloak-data
 2024__yandex-architecture-sso.code-workspace
+airflow/logs/*
+!airflow/logs/.gitkeep
+__pycache__/
+*.pyc
+frontend/node_modules
